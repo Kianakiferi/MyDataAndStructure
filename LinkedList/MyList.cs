@@ -1,4 +1,8 @@
-﻿
+﻿//Copyright:FANS Corporation
+//Author: Kiana
+//Date: 22-05-2019 02:07AM
+//Description: 线性表类
+//Version: Alpha 0.1
 
 using System;
 using System.Collections.Generic;
@@ -53,6 +57,7 @@ namespace LinkedList
 			_count = 0;
 		}
 
+		//遍历插入
 		public void Push(T item)
 		{
 
@@ -76,27 +81,6 @@ namespace LinkedList
 
 		}
 		
-		public T Pop()
-		{
-			if (IsEmpty)
-			{
-				Console.WriteLine("空");
-				return default(T);
-			}
-			MyNode<T> Seeker = new MyNode<T>();
-			Seeker = Head;
-			for (int i = 1; i < (_count-1 ); i++)
-			{
-				Seeker = Seeker.Next;
-			}
-			MyNode<T> Item = new MyNode<T>();
-			Item = Seeker.Next;
-
-			Seeker.Next = null;
-			_count--;
-			return Item.MyData;
-		}
-
 		public T Peek()
 		{
 			
@@ -157,7 +141,7 @@ namespace LinkedList
 		{
 			if (IsEmpty || num < 1)
 			{
-				Console.WriteLine("链表为空或者位置错误");
+				Console.WriteLine("????????");
 				return false;
 			}
 

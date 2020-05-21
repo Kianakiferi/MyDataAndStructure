@@ -5,8 +5,10 @@ using System.Threading;
 
 namespace CollectionsApplication
 {
+    //菜单 + 功能选项类
     class MyMenu
     {
+        const int allFuncNum = 6;
         private ConsoleKeyInfo _cki;
         private int _menuNum;
         public int menuNum { 
@@ -16,13 +18,13 @@ namespace CollectionsApplication
             } 
             set 
             {
-                if (value >= 1 && value < 7)
+                if (value >= 1 && value <= allFuncNum)
                 { 
                     _menuNum = value;
                 }
                 else
                 {
-                    _menuNum = Math.Abs(6 - value);
+                    _menuNum = Math.Abs(allFuncNum - value);//距离为allFuncNum: 1,2,3,4,5,6
                 }
             } 
         }
@@ -50,7 +52,7 @@ namespace CollectionsApplication
             ShowMenu(1);
             do
             {
-                
+                //避免程序阻塞
                 while (Console.KeyAvailable == false)
                 {
                     Thread.Sleep(100);
@@ -175,11 +177,13 @@ namespace CollectionsApplication
                 Console.WriteLine(item);
             }
         }
+
         public void ShowMenu(int num)
         {
             num++;
             Console.SetCursorPosition(0, 0);
             ShowMenu();
+            //高亮选项，设为白底黑字
             Console.SetCursorPosition(0, num);
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;

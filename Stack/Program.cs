@@ -5,8 +5,10 @@ using System.Threading;
 
 namespace CollectionsApplication
 {
+    //菜单 + 功能选项类
     class MyMenu
     {
+        const int allFuncNum = 5;
         private ConsoleKeyInfo _cki;
         private int _menuNum;
         public int menuNum
@@ -17,13 +19,13 @@ namespace CollectionsApplication
             }
             set
             {
-                if (value >= 1 && value <= 5)
+                if (value >= 1 && value <= allFuncNum)
                 {
                     _menuNum = value;
                 }
                 else
                 {
-                    _menuNum = Math.Abs(5 - value);
+                    _menuNum = Math.Abs(allFuncNum - value);//距离为allFuncNum: 1,2,3,4,5
                 }
             }
         }
@@ -50,7 +52,7 @@ namespace CollectionsApplication
             ShowMenu(1);
             do
             {
-
+                //避免程序阻塞
                 while (Console.KeyAvailable == false)
                 {
                     Thread.Sleep(100);
@@ -109,47 +111,13 @@ namespace CollectionsApplication
                             break;
                         case 3:
                             Console.WriteLine(myStack.Pop().ToString());
-
-                            //Console.WriteLine("请输入:");
-                            //int finded = myStack.Find(Console.ReadLine());
-                            //if (finded != -1)
-                            //{
-                            //    string data = myStack.Peek(finded).ToString();
-                            //    Console.WriteLine("位于结点 {0}", finded);
-                            //    Console.WriteLine("数据: {0}", data);
-                            //}
-                            //else
-                            //{
-                            //    Console.WriteLine("?????????");
-                            //}
                             break;
                         case 4:
                             Console.WriteLine(myStack.Peek().ToString());
-
-                            //myStack.ShowAll();
-                            //Console.WriteLine("请输入要删除的编号:");
-                            //string numMaybe = Console.ReadLine();
-                            //int i = 0;
-                            //bool result = int.TryParse(numMaybe, out i);
-                            //if (result)
-                            //{
-                            //    myStack.Delete(i);
-                            //    Console.WriteLine("删除完成");
-                            //}
-                            //else
-                            //{
-                            //    Console.WriteLine("请输入数字");
-                            //    break;
-                            //}
-
                             break;
-                        //case 5:
-                        //    myStack.ShowAll();
-                        //    break;
                         case 5:
                             Environment.Exit(0);
                             break;
-
                         default:
                             break;
                     }
@@ -185,10 +153,11 @@ namespace CollectionsApplication
             num++;
             Console.SetCursorPosition(0, 0);
             ShowMenu();
+
+            //高亮选项，设为白底黑字
             Console.SetCursorPosition(0, num);
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-
             Console.WriteLine(menu[num]);
             Console.ResetColor();
         }

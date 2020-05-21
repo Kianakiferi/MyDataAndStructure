@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿//Copyright:FANS Corporation
+//Author: Kiana
+//Date: 22-05-2019 02:06AM
+//Description: 二叉树类
+//Version: Alpha 0.1
+
+using System;
 
 namespace BinaryTree
 {
     public class MyNode<T>
 	{
+        //由于引用的问题，只能Public了
         public MyNode<T> LChild;
         private T _Data;
         public MyNode<T> RChild;
@@ -70,6 +71,8 @@ namespace BinaryTree
             root.LChild = lNode;
             root.RChild = rNode;
         }
+
+        //地龟创建树
         public void Insert(ref MyNode<T> current, T data)
         {
             if (current == null)
@@ -98,6 +101,7 @@ namespace BinaryTree
             _count++;
         }
 
+        //没用地龟的时候，贼长，贼复杂
         //public void Insert(T data)
         //{
         //    MyNode<T> newNode = new MyNode<T>(data);
@@ -136,6 +140,7 @@ namespace BinaryTree
         //    }
         //}
 
+        //地龟 先序遍历
         public void PreTraversal<T>(MyNode<T> root)
         {
             if(root ==  null)
@@ -153,6 +158,7 @@ namespace BinaryTree
             Console.Write("\n");
         }
 
+        //地龟 中序遍历
         public void InoTraversal<T>(MyNode<T> root)
         {
             if (root == null)
@@ -169,6 +175,7 @@ namespace BinaryTree
             Console.Write("\n");
         }
 
+        //地龟 后序遍历
         public void PosTraversal<T>(MyNode<T> root)
         {
             if (root == null)
@@ -185,6 +192,7 @@ namespace BinaryTree
             Console.Write("\n");
         }
 
+        //地龟 获取树深度
         public int GetTreeDepth(MyNode<T> root)
         {
             if (root == null)

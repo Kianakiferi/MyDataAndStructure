@@ -6,6 +6,7 @@ namespace BinaryTree
 {
 	class Program
 	{
+        //菜单 + 功能选项类
         class MyMenu
         {
             const int allFuncNum = 6;
@@ -25,7 +26,7 @@ namespace BinaryTree
                     }
                     else
                     {
-                        _menuNum = Math.Abs(allFuncNum - value);
+                        _menuNum = Math.Abs(allFuncNum - value); //距离为allFuncNum: 1,2,3,4,5,6
                     }
                 }
             }
@@ -53,7 +54,7 @@ namespace BinaryTree
                 ShowMenu(1);
                 do
                 {
-
+                    //避免程序阻塞
                     while (Console.KeyAvailable == false)
                     {
                         Thread.Sleep(100);
@@ -93,13 +94,12 @@ namespace BinaryTree
                                 //  F   H       L   N
                                 //        I
                                 //         J
-
+                                // 深度 5
                                 myTree.PreTraversal();
                                 Console.WriteLine("长出了 {0} 个结点", myTree.Count);
                                 break;
                             case 2:
                                 myTree.PreTraversal();
-
                                 break;
                             case 3:
                                 myTree.InoTraversal();
@@ -149,10 +149,10 @@ namespace BinaryTree
                 num++;
                 Console.SetCursorPosition(0, 0);
                 ShowMenu();
+                //高亮选项，设为白底黑字
                 Console.SetCursorPosition(0, num);
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-
                 Console.WriteLine(menu[num]);
                 Console.ResetColor();
             }

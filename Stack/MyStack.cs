@@ -1,6 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//Copyright:FANS Corporation
+//Author: Kiana
+//Date: 22-05-2019 02:08AM
+//Description: 栈类
+//Version: Alpha 0.1
+
+using System;
 
 namespace MyStack
 {
@@ -109,6 +113,7 @@ namespace MyStack
 	}
 }
 
+//从隔壁LinkedList 搬来的
 //public T Peek(int num)
 //{
 
@@ -200,7 +205,3 @@ namespace MyStack
 //	}
 //	return -1;
 //}
-
-
-
-
