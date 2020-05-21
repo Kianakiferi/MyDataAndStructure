@@ -109,7 +109,7 @@ namespace CollectionsApplication
                                 break;
                             }
                         case 3:
-                            Console.WriteLine("请输入:");
+                            Console.WriteLine("请输入要查找的数据:");
                             int finded = myList.Find(Console.ReadLine());
                             if (finded != -1)
                             {

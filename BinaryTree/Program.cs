@@ -34,7 +34,7 @@ namespace BinaryTree
             string[] menu =
                 {
             "请使用:上下方向键切换, 回车确定, Esc返回",
-            "--------------<栈>--------------",
+            "------------<二叉树>------------",
             "1. 创建二叉树",
             "2. 先序遍历二叉树",
             "3. 中序序遍历二叉树",
@@ -99,16 +99,19 @@ namespace BinaryTree
                                 Console.WriteLine("长出了 {0} 个结点", myTree.Count);
                                 break;
                             case 2:
+                                Console.WriteLine("先序遍历:");
                                 myTree.PreTraversal();
                                 break;
                             case 3:
+                                Console.WriteLine("中序序遍:");
                                 myTree.InoTraversal();
                                 break;
                             case 4:
+                                Console.WriteLine("后序遍历:");
                                 myTree.PosTraversal();
                                 break;
                             case 5:
-                                Console.WriteLine(myTree.GetTreeDepth().ToString());
+                                Console.WriteLine("树的最大深度为: " + myTree.GetTreeDepth().ToString());
                                 break;
                             case 6:
                                 Environment.Exit(0);
