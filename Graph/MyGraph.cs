@@ -8,8 +8,8 @@ namespace Graph
 	class VertexNode
 	{
 		private string _data;
-		public string Data 
-		{ 
+		public string Data
+		{
 			get { return _data; }
 			set { _data = value; }
 		}
@@ -27,8 +27,122 @@ namespace Graph
 		}
 
 		public static implicit operator string(VertexNode item)
-		=>item.Data;
+		=> item.Data;
 
+	}
+
+	//无用
+	class VertexList : IList
+	{
+		private VertexNode[] _vertexList = new VertexNode[10];
+		private int _count;
+
+		public VertexList()
+		{
+			_count = 0;
+		}
+
+		public object this[int index]
+		{
+			get { return _vertexList[index]; }
+			set { _vertexList[index].Data = (string)value; }
+		}
+
+		public bool IsFixedSize { get { return true; } }
+		public bool IsReadOnly { get { return false; } }
+		public int Count { get{ return _count; } }
+		public bool IsSynchronized { get { return false; } }
+		public object SyncRoot { get { return this; } }
+
+		public int Add(object value)
+		{
+			if (_count < _vertexList.Length)
+			{
+				_vertexList[_count].Data = (string)value;
+				_count++;
+
+				return (_count - 1);
+			}
+
+			return -1;
+		}
+
+		public void Clear()
+		{
+			_count = 0;
+			_vertexList.Initialize();
+		}
+
+		public bool Contains(object value)
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				if(_vertexList[i].Data == (string)value)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public void CopyTo(Array array, int index)
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				array.SetValue(_vertexList[i].Data, index++);
+			}
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			foreach (var item in _vertexList)
+			{
+				yield return item;
+			}
+		}
+
+		public int IndexOf(object value)
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				if (_vertexList[i].Data == (string)value)
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		public void Insert(int index, object value)
+		{
+			if ((_count +1 <= _vertexList.Length) && (index < Count) && (index >= 0))
+			{
+				_count++;
+
+				for (int i = Count -1 ; i > index; i--)
+				{
+					_vertexList[i] = _vertexList[i - 1];
+				}
+				_vertexList[index].Data = (string)value;
+			}
+		}
+
+		public void Remove(object value)
+		{
+			RemoveAt(IndexOf(value));
+		}
+
+		public void RemoveAt(int index)
+		{
+			if ((index >= 0) && (index < Count))
+			{
+				for (int i = index; i < Count - 1; i++)
+				{
+					_vertexList[i] = _vertexList[i + 1];
+				}
+				_count--;
+			}
+		}
 	}
 
 	class MyGraph
@@ -82,12 +196,16 @@ namespace Graph
 			}
 			
 		}
+		public static implicit operator MyGraph(int[,] arrary)
+		{
+			return new MyGraph(arrary);
+		}
 
-		public void SetNodeData(int x, string str)
+		private void SetNodeData(int x, string str)
 		{
 			vertexList[x].Data = str;
 		}
-		public string GetNodeData(int x)
+		private string GetNodeData(int x)
 		{
 			return vertexList[x].Data;
 		}
@@ -109,6 +227,71 @@ namespace Graph
 		{
 			adjacencyMatrix[vexNode1, vexNode2] = 1;
 			adjacencyMatrix[vexNode2, vexNode1] = 1;
+		}
+
+		public void TopoSort()
+		{
+			Queue result = new Queue();
+			int[] indegrees = GetIndegrees();
+
+			while(result.Count < Count)
+			{
+				int vexnum;
+				int newNum = result.Count;
+				for (vexnum = 0; vexnum < Count; vexnum++)
+				{
+					if (( indegrees[vexnum] == 0) && (vertexList[vexnum].IsVisited == false ))
+					{
+						result.Enqueue(vertexList[vexnum].Data);
+						DeleteVex(vexnum);
+						indegrees = GetIndegrees();
+						vexnum = 0;
+					}
+				}
+				if (vexnum == Count && newNum == result.Count)
+				{
+					Console.Write("这个有些问题，排不了\n");
+					return;
+				}
+			}
+
+			foreach (var item in result)
+			{
+				Console.Write(item + " ");
+			}
+			Console.Write("\n");
+		}
+		public int[] GetIndegrees()
+		{
+			int[] indegree = new int[adjacencyMatrix.GetLength(0)];
+			for (int i = 0; i < Count; i++)
+			{
+				for (int j = 0; j < Count; j++)
+				{
+					if (adjacencyMatrix[j, i] == 1)
+					{
+						indegree[i]++;
+					}
+				}
+			}
+
+			//foreach (var item in indegree)
+			//{
+			//	Console.Write(item + " ");
+			//}
+			//Console.Write("\n");
+
+			return indegree;
+		}
+		private void DeleteVex(int item)
+		{
+			vertexList[item].IsVisited = true;
+
+			for (int i = 0; i < Count; i++)
+			{
+				adjacencyMatrix[item, i] = 0;
+			}
+
 		}
 
 		public void DFSTraverse()
@@ -134,8 +317,7 @@ namespace Graph
 			DFS(ts);
 			Console.Write("\n");
 		}
-
-		public void DFS(Stack stack)
+		private void DFS(Stack stack)
 		{
 			int vexNum = GetUnviewedVex((int)stack.Peek());
 			if (vexNum == -1)
@@ -167,10 +349,9 @@ namespace Graph
 			Console.Write(vertexList[defVex] + " ");
 			tq.Enqueue(defVex);
 			BFS(tq);
-			
+
 			Console.Write("\n");
 		}
-
 		public void BFSTraverse(int vexNum)
 		{
 			InitVisited();
@@ -183,9 +364,7 @@ namespace Graph
 
 			Console.Write("\n");
 		}
-
-
-		public void BFS(Queue queue)
+		private void BFS(Queue queue)
 		{
 			int Vex1 = (int)queue.Dequeue();
 			int Vex2 = GetUnviewedVex(Vex1);
