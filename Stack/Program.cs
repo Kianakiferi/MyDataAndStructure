@@ -1,83 +1,120 @@
-﻿
-using MyStack;
+﻿using MyStack;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
+using TanyaMalisRPN;
 
 namespace CollectionsApplication
 {
-    //菜单 + 功能选项类
-    class MyMenu
-    {
-        const int allFuncNum = 5;
-        private ConsoleKeyInfo _cki;
-        private int _menuNum;
-        public int menuNum
+   
+    class MyFunc
         {
-            get
-            {
-                return _menuNum;
-            }
-            set
-            {
-                if (value >= 1 && value <= allFuncNum)
-                {
-                    _menuNum = value;
-                }
-                else
-                {
-                    _menuNum = Math.Abs(allFuncNum - value);//距离为allFuncNum: 1,2,3,4,5
-                }
-            }
-        }
+            private int _allFuncNum = menu.GetLength(0) - 3;
+            public int AllFuncNum { get => _allFuncNum; set => _allFuncNum = value; }
 
-        string[] menu =
+            private int _menuNum;
+            public int menuNum
             {
-            "请使用:上下方向键切换, 回车确定, Esc返回",
-            "--------------<栈>--------------",
-            "1. 创建栈",
-            "2. 数据元素入栈",
-            "3. 数据元素出栈",
-            "4. 取栈顶元素",
-            "5. 退出",
-            "--------------------------------"
+                get { return _menuNum; }
+                set
+                {
+                    if (value >= 1 && value <= AllFuncNum)
+                    {
+                        _menuNum = value;
+                    }
+                    else
+                    {
+                        _menuNum = Math.Abs(AllFuncNum - value);
+                    }
+                }
+            }
+
+            private int times = 0;
+            public void ReadKey()
+            {
+                Console.Clear();
+                menuNum = 1;
+                ShowMenu(1);
+
+                ConsoleKeyInfo _cki;
+                do
+                {
+                    while (Console.KeyAvailable == false)
+                    {
+                        Thread.Sleep(100);
+                    }
+                    _cki = Console.ReadKey(true);
+                    if (_cki.Key == ConsoleKey.UpArrow)
+                    {
+                        menuNum--;
+                        ShowMenu(menuNum);
+                    }
+                    if (_cki.Key == ConsoleKey.DownArrow)
+                    {
+                        menuNum++;
+                        ShowMenu(menuNum);
+                    }
+                    if (_cki.Key == ConsoleKey.Enter)
+                    {
+                        Console.Clear();
+                        return;
+                    }
+
+                } while (_cki.Key != ConsoleKey.Escape);
+            }
+            public void ShowMenu()
+            {
+                foreach (var item in menu)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            public void ShowMenu(int num)
+            {
+                num++;
+                Console.SetCursorPosition(0, 0);
+                ShowMenu();
+
+                //高亮选项，设为白底黑字
+                Console.SetCursorPosition(0, num);
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine(menu[num]);
+                Console.ResetColor();
+            }
+
+            static readonly string[] menu =
+            {
+                "请使用:上下方向键切换, 回车确定, Esc返回",
+                "--------------<栈>--------------",
+                "1. 创建栈",
+                "2. 数据元素入栈",
+                "3. 数据元素出栈",
+				"4. 取栈顶元素",
+                "5. 计算表达式",
+                "6. 退出",
+                "--------------------------------"
             };
 
-        public MyMenu()
-        {
-
-            MyStack<string> myStack = new MyStack<string>();
-
-            ShowMenu();
-            menuNum = 1;
-            ShowMenu(1);
-            do
+            public void DoFunc(ref MyStack<string> myStack)
             {
-                //避免程序阻塞
-                while (Console.KeyAvailable == false)
+                Console.Clear();
+                switch (menuNum)
                 {
-                    Thread.Sleep(100);
-                }
-
-                _cki = Console.ReadKey(true);
-
-                if (_cki.Key == ConsoleKey.UpArrow)
-                {
-                    menuNum--;
-                    ShowMenu(menuNum);
-                }
-                if (_cki.Key == ConsoleKey.DownArrow)
-                {
-                    menuNum++;
-                    ShowMenu(menuNum);
-                }
-                if (_cki.Key == ConsoleKey.Enter)
-                {
-                    ConsoleKeyInfo _tempcki;
-                    Console.Clear();
-
-                    switch (menuNum)
-                    {
-                        case 1:
+                    case 0:
+                        {
+                            times++;
+                            if (times > 10)
+                            {
+                                Console.WriteLine("李在赣神魔??");
+                                Thread.Sleep(2000);
+                                times = 0;
+                            }
+                            return;
+                        }
+                    case 1:
+                        {
                             myStack.Push("A");
                             myStack.Push("B");
                             myStack.Push("C");
@@ -94,7 +131,9 @@ namespace CollectionsApplication
                             myStack.Push("N");
                             Console.WriteLine("{0} 个元素入栈", myStack.Count);
                             break;
-                        case 2:
+                        }
+                    case 2:
+                        {
                             int prevCount = myStack.Count;
                             Console.WriteLine("请输入:");
                             myStack.Push(Console.ReadLine());
@@ -107,67 +146,69 @@ namespace CollectionsApplication
                             {
                                 Console.WriteLine("?????????");
                             }
+                            break;
+                        }
+                    case 3:
+                        Console.WriteLine(myStack.Pop().ToString());
+                        break;
+                    case 4:
+                        Console.WriteLine(myStack.Peek().ToString());
+                        break;
+                    case 5:
+                    { 
+                        Console.Write("请输入: ");
+                        string input = Console.ReadLine();
 
-                            break;
-                        case 3:
-                            Console.WriteLine(myStack.Pop().ToString());
-                            break;
-                        case 4:
-                            Console.WriteLine(myStack.Peek().ToString());
-                            break;
-                        case 5:
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            break;
+                        Stroka str = new Stroka(input);
+                        List<string> strok = str.OutString();
+                        double result = str.Calculate();
+
+                        Console.Write("逆波兰式为:");
+                        foreach (var item in strok)
+                        {
+                            Console.Write(item + " ");
+                        }
+                        Console.Write("\n");
+
+                        Console.WriteLine("计算结果为: {0}", result);
+                        break;
                     }
-                    do
-                    {
-                        while (Console.KeyAvailable == false)
-                        {
-                            Thread.Sleep(100);
-                        }
-                        _tempcki = Console.ReadKey(true);
-                        if (_tempcki.Key == ConsoleKey.Escape)
-                        {
-                            Console.Clear();
-                            ShowMenu();
-                            menuNum = 1;
-                            ShowMenu(1);
-                        }
-                    } while (_tempcki.Key != ConsoleKey.Escape);
-
+                    case 6:
+                        Console.WriteLine("拜拜");
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
                 }
-            } while (_cki.Key != ConsoleKey.X);
-        }
+                Console.WriteLine("\n 按下 “Esc” 以返回");
 
-        public void ShowMenu()
-        {
-            foreach (var item in menu)
-            {
-                Console.WriteLine(item);
+                ConsoleKeyInfo _tempcki;
+                do
+                {
+                    while (Console.KeyAvailable == false)
+                    {
+                        Thread.Sleep(100);
+                    }
+                    _tempcki = Console.ReadKey(true);
+
+                } while (_tempcki.Key != ConsoleKey.Escape);
             }
-        }
-        public void ShowMenu(int num)
-        {
-            num++;
-            Console.SetCursorPosition(0, 0);
-            ShowMenu();
 
-            //高亮选项，设为白底黑字
-            Console.SetCursorPosition(0, num);
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(menu[num]);
-            Console.ResetColor();
         }
-    }
 
     class Program
     {
         static void Main(string[] args)
         {
-            MyMenu list = new MyMenu();
-        }
+			MyFunc myFunc = new MyFunc();
+			MyStack<string> myStack = new MyStack<string>();
+
+			while (true)
+			{
+				myFunc.ReadKey();
+				myFunc.DoFunc(ref myStack);
+			}
+		}
+
     }
 }

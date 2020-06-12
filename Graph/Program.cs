@@ -5,24 +5,7 @@ namespace Graph
 {
 	class MyFunc
 	{
-		const int allFuncNum = 10;
-		private int _menuNum;
-		public int menuNum
-		{
-			get { return _menuNum; }
-			set
-			{
-				if (value >= 1 && value <= allFuncNum)
-				{
-					_menuNum = value;
-				}
-				else
-				{
-					_menuNum = Math.Abs(allFuncNum - value);//距离为allFuncNum: 1,2,3,4,5,6,7,8,9,10
-				}
-			}
-		}
-		string[] menu =
+		static readonly string[] menu =
 			{
 			"请使用:上下方向键切换, 回车确定, Esc返回",
 			"--------<图的基本操作及应用>--------",
@@ -38,13 +21,35 @@ namespace Graph
 			"10. 退出",
 			"---------------------------------"
 			};
-		int times = 0;
 
-		public int ReadKey()
+		private int _allFuncNum = menu.GetLength(0) - 3;
+		public int AllFuncNum { get => _allFuncNum; set => _allFuncNum = value; }
+
+		private int _menuNum;
+		public int menuNum
 		{
-			ConsoleKeyInfo _cki;
+			get { return _menuNum; }
+			set
+			{
+				if (value >= 1 && value <= AllFuncNum)
+				{
+					_menuNum = value;
+				}
+				else
+				{
+					_menuNum = Math.Abs(AllFuncNum - value);
+				}
+			}
+		}
+
+		private int times = 0;
+		public void ReadKey()
+		{
+			Console.Clear();
 			menuNum = 1;
 			ShowMenu(1);
+
+			ConsoleKeyInfo _cki;
 			do
 			{
 				while (Console.KeyAvailable == false)
@@ -65,15 +70,11 @@ namespace Graph
 				if (_cki.Key == ConsoleKey.Enter)
 				{
 					Console.Clear();
-					return menuNum;
+					return;
 				}
 
 			} while (_cki.Key != ConsoleKey.Escape);
-			Console.Clear();
-
-			return 0;
 		}
-
 		public void ShowMenu()
 		{
 			foreach (var item in menu)
@@ -95,137 +96,141 @@ namespace Graph
 			Console.ResetColor();
 		}
 
-		public void DoFunc(int num, ref MyGraph myGraph)
+		public void DoFunc(ref MyGraph myGraph)
 		{
-			ConsoleKeyInfo _cki;
-			do
+			Console.Clear();
+			switch (menuNum)
 			{
-				switch (num)
-				{
-					case 0:
+				case 0:
+					{
+						times++;
+						if (times > 10)
 						{
-							times++;
-							if (times > 10)
-							{
-								Console.WriteLine("李在赣神魔??");
-								Thread.Sleep(2000);
-								times = 0;
-							}
-							return;
+							Console.WriteLine("李在赣神魔??");
+							Thread.Sleep(2000);
+							times = 0;
 						}
-					case 1:
+						return;
+					}
+				case 1:
+					{
+						int[,] a = new int[,] { { 0, 1, 1, 0, 0, 0, 0, 0 },
+												{ 1, 0, 0, 1, 1, 0, 0, 0 },
+												{ 1, 0, 0, 0, 0, 1, 1, 0 },
+												{ 0, 1, 0, 0, 0, 0, 0, 1 },
+												{ 0, 1, 0, 0, 0, 0, 0, 1 },
+												{ 0, 0, 1, 0, 0, 0, 0, 1 },
+												{ 0, 0, 1, 0, 0, 0, 0, 1 },
+												{ 0, 0, 0, 1, 1, 1, 1, 0 } };
+						myGraph = a;
+						if (myGraph.IsUndirectedGraph)
 						{
-							int[,] a = new int[,] { { 0, 1, 1, 0, 0, 0, 0, 0 },
-													{ 1, 0, 0, 1, 1, 0, 0, 0 },
-													{ 1, 0, 0, 0, 0, 1, 1, 0 },
-													{ 0, 1, 0, 0, 0, 0, 0, 1 },
-													{ 0, 1, 0, 0, 0, 0, 0, 1 },
-													{ 0, 0, 1, 0, 0, 0, 0, 1 },
-													{ 0, 0, 1, 0, 0, 0, 0, 1 },
-													{ 0, 0, 0, 1, 1, 1, 1, 0 } };
-							myGraph = a;
-							if (myGraph.IsUndirectedGraph)
-							{
-								Console.WriteLine("创建了无向图");
-							}
-							else
-							{
-								Console.WriteLine("创建的不是无向图");
-							}
-							break;
+							Console.WriteLine("创建了无向图");
 						}
-					case 2:
+						else
 						{
-							int[,] a = new int[,] { { 0, 1, 2, 0, 0, 0, 0, 0 },
-													{ 1, 0, 0, 1, 3, 0, 0, 0 },
-													{ 2, 0, 0, 0, 0, 1, 4, 0 },
-													{ 0, 1, 0, 0, 0, 0, 0, 1 },
-													{ 0, 3, 0, 0, 0, 0, 0, 5 },
-													{ 0, 0, 1, 0, 0, 0, 0, 1 },
-													{ 0, 0, 4, 0, 0, 0, 0, 6 },
-													{ 0, 0, 0, 1, 5, 1, 6, 0 } };
-							myGraph = a;
-							if (myGraph.IsUndirectedGraph)
-							{
-								Console.WriteLine("创建了无向网");
-							}
-							else
-							{
-								Console.WriteLine("创建的不是无向网");
-							}
-							break;
+							Console.WriteLine("创建的不是无向图");
 						}
-					case 3:
+						break;
+					}
+				case 2:
+					{
+						int[,] a = new int[,] { { 0, 1, 2, 0, 0, 0, 0, 0 },
+												{ 1, 0, 0, 1, 3, 0, 0, 0 },
+												{ 2, 0, 0, 0, 0, 1, 4, 0 },
+												{ 0, 1, 0, 0, 0, 0, 0, 1 },
+												{ 0, 3, 0, 0, 0, 0, 0, 5 },
+												{ 0, 0, 1, 0, 0, 0, 0, 1 },
+												{ 0, 0, 4, 0, 0, 0, 0, 6 },
+												{ 0, 0, 0, 1, 5, 1, 6, 0 } };
+						myGraph = a;
+						if (myGraph.IsUndirectedGraph)
 						{
-							int[,] b = new int[,] { { 0, 1, 1, 1, 0, 0 },
-													{ 0, 0, 0, 0, 0, 0 },
-													{ 0, 0, 0, 0, 0, 1 },
-													{ 0, 1, 0, 0, 0, 1 },
-													{ 0, 0, 1, 0, 0, 1 },
-													{ 0, 0, 0, 0, 0, 0 }};
-							myGraph = b;
-							Console.WriteLine("创建了有向图");
-							break;
+							Console.WriteLine("创建了无向网");
 						}
-					case 4:
+						else
 						{
-							int[,] b = new int[,] { { 0, 1, 1, 4, 0, 0 },
-													{ 0, 0, 0, 0, 0, 0 },
-													{ 0, 0, 0, 0, 0, 1 },
-													{ 0, 2, 0, 0, 0, 1 },
-													{ 0, 0, 3, 0, 0, 1 },
-													{ 0, 0, 0, 0, 0, 0 }};
-							myGraph = b;
-							Console.WriteLine("创建了有向网");
-							break;
+							Console.WriteLine("创建的不是无向网");
 						}
-					case 5:
-						{
-							Console.WriteLine("DFS遍历: ");
-							myGraph.DFSTraverse();
-							Console.WriteLine("BFS遍历: ");
-							myGraph.BFSTraverse();
-							break;
-						}
-					case 6:
-						{
-							Console.WriteLine("Topo排序: ");
-							myGraph.TopoSort();
-							break;
-						}
-					case 7:
-						{
-							throw new NotImplementedException();
-						}
-					case 8:
-						{ 
-							throw new NotImplementedException();
-						}
-					case 9:
-						{
-							throw new NotImplementedException();
-						}
-					case 10:
-						{
-							Console.WriteLine("拜拜");
-							Environment.Exit(0);
-							break;
-						}
-					case -1:
-						{
-							throw new NotImplementedException();
-						}
-					default:
+						break;
+					}
+				case 3:
+					{
+						int[,] b = new int[,] { { 0, 1, 1, 1, 0, 0 },
+												{ 0, 0, 0, 0, 0, 0 },
+												{ 0, 0, 0, 0, 0, 1 },
+												{ 0, 1, 0, 0, 0, 1 },
+												{ 0, 0, 1, 0, 0, 1 },
+												{ 0, 0, 0, 0, 0, 0 }};
+						myGraph = b;
+						Console.WriteLine("创建了有向图");
+						break;
+					}
+				case 4:
+					{
+						int[,] b = new int[,] { { 0, 1, 1, 4, 0, 0 },
+												{ 0, 0, 0, 0, 0, 0 },
+												{ 0, 0, 0, 0, 0, 1 },
+												{ 0, 2, 0, 0, 0, 1 },
+												{ 0, 0, 3, 0, 0, 1 },
+												{ 0, 0, 0, 0, 0, 0 }};
+						myGraph = b;
+						Console.WriteLine("创建了有向网");
+						break;
+					}
+				case 5:
+					{
+						Console.WriteLine("DFS遍历: ");
+						myGraph.DFSTraverse();
+						Console.WriteLine("BFS遍历: ");
+						myGraph.BFSTraverse();
+						break;
+					}
+				case 6:
+					{
+						Console.WriteLine("Topo排序: ");
+						myGraph.TopoSort();
+						break;
+					}
+				case 7:
+					{
+						throw new NotImplementedException();
+					}
+				case 8:
+					{ 
+						throw new NotImplementedException();
+					}
+				case 9:
+					{
+						throw new NotImplementedException();
+					}
+				case 10:
+					{
+						Console.WriteLine("拜拜");
+						Environment.Exit(0);
+						break;
+					}
+				case -1:
+					{
+						throw new NotImplementedException();
+					}
+				default:
 					break;
 			}
+			Console.WriteLine("\n 按下 “Esc” 以返回");
+
+			ConsoleKeyInfo _tempcki;
+			do
+			{ 
 				while (Console.KeyAvailable == false)
 				{
 					Thread.Sleep(100);
 				}
-				_cki = Console.ReadKey(true);
-
-			} while (_cki.Key != ConsoleKey.Escape);
+				_tempcki = Console.ReadKey(true);
+				
+			} while (_tempcki.Key != ConsoleKey.Escape);
 		}
+
 	}
 
 	class Program
@@ -237,7 +242,8 @@ namespace Graph
 
 			while (true)
 			{
-				myFunc.DoFunc(myFunc.ReadKey(), ref myGraph);
+				myFunc.ReadKey();
+				myFunc.DoFunc(ref myGraph);
 			}
 		}
 	}
