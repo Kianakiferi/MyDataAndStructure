@@ -1,15 +1,15 @@
 # My Data And Structure Work
  Data and Structure home works, C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
  
-# Usage
+## Usage
 1. Pull all
 2. See the "static void Main"
 3. Run
  
-# Legal and Licensing
+## Legal and Licensing
 Whatever, take it
 
-### Project Include
+## Project Include
 - A Console GUI, using Up Down arrow key to switch, Enter confirm
 
 - ArraryList
