@@ -1,7 +1,11 @@
 # MyDataAndStructure
  DataAndStructure Home Work,Using C#
  
+ Pull all and using
+ 
 ### Include
+- A Console GUI, using Up Down arrow key to switch, Enter confirm
+
 - ArraryList
 >- Creat
 >- Output Like 
