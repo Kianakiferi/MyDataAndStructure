@@ -8,7 +8,7 @@
  
 # Legal and Licensing
 Whatever, take it
- 
+
 ### Project Include
 - A Console GUI, using Up Down arrow key to switch, Enter confirm
 
