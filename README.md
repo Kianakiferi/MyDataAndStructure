@@ -1,9 +1,15 @@
-# MyDataAndStructure
- DataAndStructure Home Work,Using C#
+# My Data And Structure Work
+ Data and Structure home works, C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
  
- Pull all and using
+# Usage
+1. Pull all
+2. See the "static void Main"
+3. Run
  
-### Include
+# Legal and Licensing
+Whatever, take it
+ 
+### Project Include
 - A Console GUI, using Up Down arrow key to switch, Enter confirm
 
 - ArraryList
