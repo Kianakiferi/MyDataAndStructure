@@ -13,6 +13,8 @@ namespace BinaryTree
         //由于引用的问题，只能Public了
         public MyNode<T> LChild;
         private T _Data;
+        public T Data { get { return _Data; } set { _Data = value; } }
+
         public MyNode<T> RChild;
 
         public MyNode()
@@ -39,10 +41,6 @@ namespace BinaryTree
 			_Data = item;
 			RChild = null;
 		}
-
-        //public MyNode<T> LChild { get { return _LChild; }  set { _LChild = value; } }
-        public T Data { get { return _Data; } set { _Data = value; } }
-        //public MyNode<T> RChild { get { return RChild; } set { RChild = value; } }
     }
 
 	public class MyTree<T>
@@ -54,14 +52,12 @@ namespace BinaryTree
         {
             root = null;
         }
-
         public MyTree(MyNode<T> lNode, T value, MyNode<T> rNode )
         {
             root.LChild = lNode;
             root.Data = value;
             root.RChild = rNode;
         }
-
         public MyTree(T value)
         {
             root.Data = value;
@@ -94,54 +90,14 @@ namespace BinaryTree
                 }
             }
         }
-
         public void Insert(T data)
         {
             Insert(ref root, data);
             _count++;
         }
 
-        //没用地龟的时候，贼长，贼复杂
-        //public void Insert(T data)
-        //{
-        //    MyNode<T> newNode = new MyNode<T>(data);
-        //    MyNode<T> current = root;
-
-        //    if (root == null)
-        //    {
-        //        root = newNode;
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        while (true)
-        //        {
-        //            MyNode<T> parent = current;
-        //            if (string.Compare(current.Data.ToString(), data.ToString())>0)
-        //            {
-        //                current = current.LChild;
-        //                if (current == null)
-        //                {
-        //                    parent.LChild = newNode;
-        //                    break;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                current = current.RChild;
-        //                if (current == null)
-        //                {
-        //                    parent.RChild = newNode;
-        //                    break;
-        //                }
-
-        //            }
-        //        }
-        //    }
-        //}
-
         //地龟 先序遍历
-        public void PreTraversal<T>(MyNode<T> root)
+        public void PreTraversal(MyNode<T> root)
         {
             if(root ==  null)
             {
@@ -149,48 +105,73 @@ namespace BinaryTree
             }
 
             Console.Write(root.Data + " ");
-            PreTraversal<T>(root.LChild);
-            PreTraversal<T>(root.RChild);
+            PreTraversal(root.LChild);
+            PreTraversal(root.RChild);
         }
         public void PreTraversal()
         {
-            PreTraversal<T>(root);
+            PreTraversal(root);
             Console.Write("\n");
         }
 
         //地龟 中序遍历
-        public void InoTraversal<T>(MyNode<T> root)
+        public void InoTraversal(MyNode<T> root)
         {
             if (root == null)
             {
                 return;
             }
-            PreTraversal<T>(root.LChild);
+            PreTraversal(root.LChild);
             Console.Write(root.Data + " ");   
-            PreTraversal<T>(root.RChild);
+            PreTraversal(root.RChild);
         }
         public void InoTraversal()
         {
-            InoTraversal<T>(root);
+            InoTraversal(root);
             Console.Write("\n");
         }
 
         //地龟 后序遍历
-        public void PosTraversal<T>(MyNode<T> root)
+        public void PosTraversal(MyNode<T> root)
         {
             if (root == null)
             {
                 return;
             }
-            PreTraversal<T>(root.LChild);
-            PreTraversal<T>(root.RChild);
+            PreTraversal(root.LChild);
+            PreTraversal(root.RChild);
             Console.Write(root.Data + " ");
         }
         public void PosTraversal()
         {
-            PosTraversal<T>(root);
+            PosTraversal(root);
             Console.Write("\n");
         }
+
+        //地龟 获取叶子
+        public void GetWeedNode(MyNode<T> root, ref int result)
+		{
+            if (root == null)
+            {
+                return;
+            }
+            if (root.LChild == null && root.RChild == null)
+            {
+                result++;
+                return;
+            }
+            else
+            {
+                GetWeedNode(root.LChild, ref result);
+                GetWeedNode(root.RChild, ref result);
+            }   
+        }
+        public int GetWeedNum()
+		{
+            int result = 0;
+            GetWeedNode(root, ref result);
+            return result;
+		}
 
         //地龟 获取树深度
         public int GetTreeDepth(MyNode<T> root)
@@ -208,6 +189,111 @@ namespace BinaryTree
         public int GetTreeDepth()
         {
             return GetTreeDepth(root);
+        }
+
+        //地龟 获取父结点
+        public MyNode<T> GetParentNode(MyNode<T> root, string item)
+		{
+            if (root == null)
+            {
+                return default;
+            }
+			if (root.LChild.Data.ToString().Equals(item) || root.RChild.Data.ToString().Equals(item))
+			{
+                return root;
+			}
+			if (GetParentNode(root.LChild, item) != default)
+			{
+                return root.LChild;
+			}
+            if (GetParentNode(root.RChild, item) != default)
+            {
+                return root.RChild;
+            }
+            return default;
+
+        }
+        public void GetParentNode(string item)
+        {
+            MyNode<T> result = GetParentNode(root, item);
+
+			if (result == default)
+			{
+                Console.WriteLine("没找到这个结点");
+			}
+			else
+			{
+                Console.WriteLine("父结点为: " + result.Data.ToString());
+            }
+        }
+
+        //地龟 获取子结点
+        public MyNode<T> GetChildrenNode(MyNode<T> root, string item)
+        {
+            MyNode<T> result = new MyNode<T>();
+            if (root == null)
+            {
+                return default;
+            }
+            if (root.Data.ToString().Equals(item))
+            {
+                return root;
+            }
+			else
+			{
+                result = GetChildrenNode(root.LChild, item);
+				if (result == null)
+				{
+                    result = GetChildrenNode(root.RChild, item);
+                    if (result == null)
+                    {
+                        return default;
+                    }
+				}
+                return result;
+            }
+        }
+        public void GetChildrenNode(string item)
+		{
+            MyNode<T> result = GetChildrenNode(root, item);
+
+            string[] resultLR = new string[2];
+
+            if (result.LChild == null && result.RChild != null)
+            {
+                resultLR[0] = "null";
+                resultLR[1] = result.RChild.Data.ToString();
+                Console.WriteLine("子结点为: ");
+                foreach (var node in resultLR)
+                {
+                    Console.Write(node + " ");
+                }
+                return;
+            }
+            if (result.LChild != null && result.RChild == null)
+            {
+                resultLR[0] = result.LChild.Data.ToString();
+                resultLR[1] = "null";
+                Console.WriteLine("子结点为: ");
+                foreach (var node in resultLR)
+                {
+                    Console.Write(node + " ");
+                }
+                return;
+            }
+			if (result.LChild != null && result.RChild != null)
+			{
+                resultLR[0] = result.LChild.Data.ToString();
+                resultLR[1] = result.RChild.Data.ToString();
+                Console.WriteLine("子结点为: ");
+                foreach (var node in resultLR)
+                {
+                    Console.Write(node + " ");
+                }
+                return;
+            }
+            Console.WriteLine("{0} 为叶子结点", item)  ;
+            return;
         }
 
         public void Clear()

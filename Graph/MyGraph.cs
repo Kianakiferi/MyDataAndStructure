@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Graph
@@ -231,10 +232,17 @@ namespace Graph
 
 		public void TopoSort()
 		{
+			if (Count == 0)
+			{
+				Console.WriteLine("没东西啊");
+				return;
+			}
 			Queue result = new Queue();
 			int[] indegrees = GetIndegrees();
 
-			while(result.Count < Count)
+			Console.WriteLine("Topo排序: ");
+
+			while (result.Count < Count)
 			{
 				int vexnum;
 				int newNum = result.Count;
@@ -250,9 +258,10 @@ namespace Graph
 				}
 				if (vexnum == Count && newNum == result.Count)
 				{
-					Console.Write("这个有些问题，排不了\n");
+					Console.Write("有向无环图，排不了\n");
 					return;
 				}
+
 			}
 
 			foreach (var item in result)
@@ -296,6 +305,13 @@ namespace Graph
 
 		public void DFSTraverse()
 		{
+			if (Count == 0)
+			{
+				Console.WriteLine("没东西啊");
+				return;
+			}
+			Console.WriteLine("DFS遍历: ");
+
 			InitVisited();
 			Stack ts = new Stack();
 			int defVex = 0;
@@ -303,7 +319,9 @@ namespace Graph
 			vertexList[defVex].IsVisited = true;
 			Console.Write(vertexList[defVex] + " ");
 			ts.Push(defVex);
+			   
 			DFS(ts);
+
 			Console.Write("\n");
 		}
 		public void DFSTraverse(int vexNum)
@@ -341,6 +359,12 @@ namespace Graph
 
 		public void BFSTraverse()
 		{
+			if (Count == 0)
+			{
+				Console.WriteLine("没东西啊");
+				return;
+			}
+			Console.WriteLine("BFS遍历: ");
 			InitVisited();
 			Queue tq = new Queue();
 			int defVex = 0;
@@ -383,6 +407,81 @@ namespace Graph
 			}
 
 			BFS(queue);
+		}
+
+		public void MiniSpannTree()
+		{
+			if (Count == 0)
+			{
+				Console.WriteLine("没东西啊");
+				return;
+			}
+			string[] result = new string[Count];
+			int cost = 0;
+			int vexNum;
+			int[] vexPath = new int[Count];
+			int[] sortPath = new int[Count];
+			
+
+
+			for (int i = 0; i < Count; i++)
+			{
+				vexPath[i] = adjacencyMatrix[0, i];
+			}
+			result[0] = vertexList[0].Data;
+			for (int i = 1; i < Count; i++)
+			{
+				//foreach (var item in vexPath)
+				//{
+				//	Console.Write(item + " ");
+				//}
+				//Console.Write("\n");
+
+				vexPath.CopyTo(sortPath, 0);
+				Array.Sort(sortPath);
+				int secend = 1;
+				for (int s = 0; s < sortPath.GetLength(0); s++)
+				{
+					if (sortPath[s] != sortPath.Min())
+					{
+						secend = sortPath[s];
+						cost += secend;
+						break;
+					}
+				}
+
+				for (int j = 0; j < Count; j++)
+				{
+					if (vexPath[j] == secend)
+					{
+						vexPath[j] = 0;
+						vexNum = j;
+						result[i] = vertexList[j].Data;
+						GetMinimumPath(ref vexPath, vexNum);
+						break;
+					}
+				}
+			}
+
+
+			Console.WriteLine("构建最小生成树: ");
+			foreach (var item in result)
+			{
+				Console.Write(item + " ");
+			}
+			Console.WriteLine("\n花费: " + cost);
+
+		}
+
+		private void GetMinimumPath(ref int[] vexPath, int item)
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				if (adjacencyMatrix[item, i] < vexPath[i])
+				{
+					vexPath[i] = adjacencyMatrix[item, i];
+				}
+			}
 		}
 
 		private int GetUnviewedVex(int vnum)
