@@ -4,6 +4,8 @@
 包含：链表, 数组, 栈, 二叉树, 图. 和一些著名的算法
 
 C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
+
+.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core
  
 ## 用法
 1. 拉全部
