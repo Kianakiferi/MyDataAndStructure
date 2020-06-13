@@ -1,16 +1,16 @@
 # My Data And Structure Work
- Data and Structure home works, C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
+A Console GUI, "Up" "Down" arrow key to switch, Enter confirm
+
+C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
  
 ## Usage
 1. Pull all
-2. See the "static void Main"
+2. See each "Main()"
 3. Run
  
-## Legal and Licensing
-Whatever, take it
-
 ## Project Include
-- A Console GUI, using Up Down arrow key to switch, Enter confirm
+- 
+	
 
 - ArraryList
 >- Creat
@@ -59,3 +59,7 @@ Whatever, take it
 >- BFSTraverse
 >- IsUndirectedGraph
 >- Count
+
+## Legal and Licensing
+Whatever, take it
+
