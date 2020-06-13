@@ -9,7 +9,7 @@ C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
 1. Pull all
 2. See each "Main()"
 3. Run
- s
+
 ## Project Include
 
 - ArraryList
