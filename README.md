@@ -1,21 +1,25 @@
 # My Data And Structure Work
-A Console GUI, "Up" "Down" arrow key to switch, Enter confirm
+A Console GUI, <kbd>↑</kbd>, <kbd>↓</kbd> key to switch, <kbd>Enter</kbd> confirm
+
+Include：Linked List, Arrary List, Stack, Binary Tree, Graph. And some famous algorithms
 
 C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
+
+.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core.NET Core
  
 ## Usage
 1. Pull all
 2. See each "Main()"
 3. Run
- 
+
 ## Project Include
-- 
-	
 
 - ArraryList
 >- Creat
->- Output Like 
-
+>- implicit int[,]
+>- Arrary List Index
+>- Matrix Multiply
+>- Output With Tabs, Like:
 > > |1|2|3|
 > > |-|-|-|
 > > |4|5|6| 
@@ -36,27 +40,41 @@ C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
 >- Show All
 >- Count
 
-* Stack
+- Stack
 >- Creat
+>- Calculate A Easy Math Expression (Prim)
 >- Push
 >- Pop
 >- Peek
+>- GetEnumerator
+>- Contains
+>- CopyTo
+>- Remove
+>- RemoveAt
 >- Clear
 >- Count
+>- IsEmpty
 
-* Binary Tree
+- Binary Tree
 >- Creat
 >- Insert
 >- PreTraversal
 >- InoTraversal
 >- PosTraversal
+>- Find Weed Node
+>- Get Tree Depth
+>- Get Node's Parent
+>- Get Node's Childrens
+>- Huffman Encode
 >- Clear
 >- Count
 
-* Graph
+- Graph
 >- Creat
 >- DFSTraverse
 >- BFSTraverse
+>- Topo Sort
+>- Get Mini Spanning Tree
 >- IsUndirectedGraph
 >- Count
 
