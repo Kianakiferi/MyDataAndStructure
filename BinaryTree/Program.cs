@@ -1,15 +1,15 @@
-﻿using System.Text.RegularExpressions;
+﻿using Fans.BinaryTree;
+using System.Text.RegularExpressions;
 
-namespace BinaryTree
+namespace Fans
 {
-
 	class Program
 	{
         static void Main(string[] args)
 		{
             MyFunc myFunc = new MyFunc();
             MyTree<string> myTree = new MyTree<string>();
-
+            
             while (true)
 			{
                 myFunc.ReadKey();

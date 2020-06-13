@@ -1,4 +1,5 @@
-﻿using Fans.Graph;
+﻿using Fans.DataAndStructure;
+using System;
 
 namespace Fans
 {
@@ -7,12 +8,11 @@ namespace Fans
 		static void Main(string[] args)
 		{
 			MyFunc myFunc = new MyFunc();
-			MyGraph myGraph = new MyGraph();
 
 			while (true)
 			{
 				myFunc.ReadKey();
-				myFunc.DoFunc(ref myGraph);
+				myFunc.DoFunc();
 			}
 		}
 	}

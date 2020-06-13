@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace BinaryTree
+namespace Fans
 {
-	class MyFunc
+    namespace BinaryTree
+    {
+	    public class MyFunc
         {
             //通用，不用看
             private int _allFuncNum = menu.GetLength(0) - 3;
@@ -80,6 +82,7 @@ namespace BinaryTree
                 Console.WriteLine(menu[num]);
                 Console.ResetColor();
             }
+            public bool IsGoBack { get; set; }
             //通用，不用看
 
             static readonly string[] menu =
@@ -103,6 +106,7 @@ namespace BinaryTree
                 {
                     case 0:
                     {
+                        IsGoBack = true;
                         times++;
                         if (times > 10)
                         {
@@ -217,7 +221,7 @@ namespace BinaryTree
                         break;
                     }
                     case 7:
-                        
+                        Console.WriteLine("拜拜");
                         Environment.Exit(0);
                         break;
                     default:
@@ -236,6 +240,6 @@ namespace BinaryTree
                     
                 } while (_tempcki.Key != ConsoleKey.Escape);
             }
-
         }
+    }
 }

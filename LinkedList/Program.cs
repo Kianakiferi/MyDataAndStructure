@@ -1,8 +1,7 @@
-﻿using LinkedList;
+﻿using Fans.LinkedList;
 
-namespace CollectionsApplication
+namespace Fans
 {
-
 	class Program
     {
         static void Main(string[] args)

@@ -1,6 +1,6 @@
-﻿using MyStack;
+﻿using Fans.Stack;
 
-namespace CollectionsApplication
+namespace Fans
 {
 	class Program
     {
