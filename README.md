@@ -1,7 +1,7 @@
 # My Data And Structure Work
 A Console GUI, <kbd>↑</kbd>, <kbd>↓</kbd> key to switch, <kbd>Enter</kbd> confirm
 
-Include "Linked List", "Arrary List", "Stack", "Binary Tree", "Graph"
+Include：Linked List, Arrary List, Stack, Binary Tree, Graph. And some famous algorithms
 
 C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
  
@@ -9,7 +9,7 @@ C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#C#
 1. Pull all
 2. See each "Main()"
 3. Run
- 
+ s
 ## Project Include
 
 - ArraryList
